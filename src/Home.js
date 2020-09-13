@@ -1,8 +1,8 @@
 import React from 'react';
-import {Container, Content, Text, Item, Input} from 'native-base';
+import {Container, Form, Item, Input, Spinner, Content} from 'native-base';
 import {FlatList} from 'react-native';
 import Post from './Post';
-import react from 'react';
+import Styles from './Styles';
 
 const Home = ({navigation}) => {
   const URL = 'https://hn.algolia.com/api/v1/search_by_date';
@@ -77,10 +77,21 @@ const Home = ({navigation}) => {
     setFiltered(searchResults);
   };
 
+  if (posts.length === 0) {
+    return (
+      <Container>
+        <Content>
+          <Spinner />
+        </Content>
+      </Container>
+    );
+  }
+
   return (
     <Container>
-      <Item>
+      <Item fixedlabel>
         <Input
+          style={Styles.search}
           value={query}
           onChangeText={search}
           placeholder="Enter search term"
